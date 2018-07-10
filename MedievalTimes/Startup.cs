@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using MedievalTimes.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MedievalTimes.Areas.Identity.Data;
 
 namespace MedievalTimes
 {
@@ -37,7 +38,8 @@ namespace MedievalTimes
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
