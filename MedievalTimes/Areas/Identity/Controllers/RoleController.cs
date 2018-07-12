@@ -5,12 +5,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MedievalTimes.Areas.Identity.Data;
 using MedievalTimes.Data;
+using MedievalTimes.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedievalTimes.Areas.Identity.Controllers
 {
+    [Authorize(Roles ="Leader")]
     public class RoleController : Controller
     {
 
@@ -36,15 +39,29 @@ namespace MedievalTimes.Areas.Identity.Controllers
             return View(namenLijst);
         }
 
+        /// <summary>
+        /// Show UserDetails including Role (selection by username)
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public IActionResult ShowUser(string userName)
         {
   
-            var gebruikers = _context.Users.ToList();           
-            var gebruiker = gebruikers.Where(usr => usr.Name == userName).FirstOrDefault();
+            //Get selected Userinfo         
+            var gebruiker = _context.Users.Where(usr => usr.Name == userName).FirstOrDefault();
+            //Get role of the selected user
             var gebruikersRolId = _context.UserRoles.Where(rle => rle.UserId == gebruiker.Id).FirstOrDefault();
             var gebruikersRol = _context.Roles.Where(rl => rl.Id == gebruikersRolId.RoleId).FirstOrDefault();
 
-            return View(gebruiker);
+            //Build ViewModel
+            UserDetailVM gebruikersDetail = new UserDetailVM()
+            {
+                Gebruikers = gebruiker,
+                GebruikersRol = gebruikersRol
+            };
+
+            //Show ViewModel
+            return View(gebruikersDetail);
         }
 
 
