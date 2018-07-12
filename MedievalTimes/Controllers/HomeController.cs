@@ -5,15 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MedievalTimes.Models;
+using MedievalTimes.Data;
+using Microsoft.AspNetCore.Identity;
+using MedievalTimes.Areas.Identity.Data;
 
 namespace MedievalTimes.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        //****************************************************************** Injections
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private ApplicationDbContext _context;
+
+        public HomeController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext dbContext)
         {
+            _context = dbContext;
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+
+        //****************************************************************** Methods
+        public async Task<IActionResult> Index()
+        {
+            DataSeeder DSeeder = new DataSeeder(_userManager, _roleManager,_context);
+            await DSeeder.Seed();
+
             return View();
         }
+
 
         public IActionResult About()
         {

@@ -33,12 +33,13 @@ namespace MedievalTimes.Data
                 await RRepo.AddRole("Creator");
                 await RRepo.AddRole("Admin");
                 await RRepo.AddRole("Leader");
-                
+
                 if (_context.Users.Where(user => user.UserName == "fantasy@zeelandnet.nl").Count() != 0)
                     await RRepo.DistributeRole(
                        _context.Users.Where(user => user.UserName == "fantasy@zeelandnet.nl")
                        .FirstOrDefault(), "Leader");
             }
+
         }
     }
 }
