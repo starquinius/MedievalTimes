@@ -28,9 +28,11 @@ namespace MedievalTimes.Controllers
         //****************************************************************** Methods
         public async Task<IActionResult> Index()
         {
+            //Seed Roles into DB Tables
             DataSeeder DSeeder = new DataSeeder(_userManager, _roleManager,_context);
             await DSeeder.Seed();
 
+            //....
             return View();
         }
 

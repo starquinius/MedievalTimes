@@ -1,0 +1,8 @@
+﻿@model List<string>
+
+<h1>Current users:</h1>
+<hr />
+@foreach (var name in @Model)
+{
+    <a asp-area="Identity" asp-controller="Role" asp-action="ShowUser" asp-route-userName="@name"><h2>@name</h2></a>
+}
