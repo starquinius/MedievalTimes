@@ -10,6 +10,7 @@ namespace MedievalTimes.ViewModels
     public class UserDetailVM
     {
         public ApplicationUser Gebruikers { get; set; }
-        public IdentityRole GebruikersRol { get; set; }
+        public IdentityRole GebruikersIDRol { get; set; }
+        public String GebruikersRol { get; set; }
     }
 }

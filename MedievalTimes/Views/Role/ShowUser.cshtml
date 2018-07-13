@@ -1,8 +1,42 @@
 ﻿@model UserDetailVM
 
 <h1>User Detail</h1>
-<hr/>
+<hr />
 
-<p>Username: @Model.Gebruikers.Name</p>
-<p>Desired Role: @Model.Gebruikers.DesiredRol</p>
-<p>Current Role: @Model.GebruikersRol </p>
+<div class="container">
+    <div class="col-lg-3">
+        <p>Username: @Model.Gebruikers.Name</p>
+        <p>Desired Role: @Model.Gebruikers.DesiredRol</p>
+        <p>Current Role: @Model.GebruikersIDRol </p>
+    </div>
+    <div class="col-lg-9">
+        <form asp-controller="Role" asp-action="ChangeUserRole">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Gebruikers.Id" />
+            <div class="form-group">
+                <label asp-for="Gebruikers.Name" class="control-label"></label>
+                <input asp-for="Gebruikers.Name" class="form-control" />
+                <span asp-validation-for="Gebruikers.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gebruikers.UserName" class="control-label"></label>
+                <input asp-for="Gebruikers.UserName" class="form-control" />
+                <span asp-validation-for="Gebruikers.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.GebruikersRol"></label>
+                <select asp-for="@Model.GebruikersRol" asp-items="Html.GetEnumSelectList<MedievalTimes.Areas.Identity.Data.ApplicationUser.GebruikersRol>()"></select>
+                <span asp-validation-for="@Model.GebruikersRol" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Save Changes</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="text-center">
+    <a asp-action="Index">Back to Userlist</a>
+</div>

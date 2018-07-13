@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedievalTimes.Areas.Identity.Controllers
 {
-    [Authorize(Roles ="Leader")]
+    [Authorize(Roles = "Leader")]
     public class RoleController : Controller
     {
 
@@ -31,7 +31,7 @@ namespace MedievalTimes.Areas.Identity.Controllers
         }
 
         //****************************************************************** Methods
-        
+
         public IActionResult Index()
         {
             var namenLijst = _context.Users.Select(user => user.Name).ToList();
@@ -46,7 +46,7 @@ namespace MedievalTimes.Areas.Identity.Controllers
         /// <returns></returns>
         public IActionResult ShowUser(string userName)
         {
-  
+
             //Get selected Userinfo         
             var gebruiker = _context.Users.Where(usr => usr.Name == userName).FirstOrDefault();
             //Get role of the selected user
@@ -57,11 +57,51 @@ namespace MedievalTimes.Areas.Identity.Controllers
             UserDetailVM gebruikersDetail = new UserDetailVM()
             {
                 Gebruikers = gebruiker,
-                GebruikersRol = gebruikersRol
+                GebruikersIDRol = gebruikersRol,
+                GebruikersRol = gebruikersRolId.ToString()                
             };
 
             //Show ViewModel
             return View(gebruikersDetail);
+        }
+
+        /// <summary>
+        /// Save Changes Made To The Users Account
+        /// </summary>
+        /// <param name="gebruikersDetail"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult ChangeUserRole(UserDetailVM gebruikersDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                //Get eventually new Role for user from from
+                var roleName = Enum.GetName(typeof(ApplicationUser.GebruikersRol), Convert.ToInt32(gebruikersDetail.GebruikersRol));
+                var nieuweRol = _context.Roles.Where(rl => rl.Name == roleName).FirstOrDefault();
+
+                //Set new role to the selected user (Single() works, because GuidIds are unique)
+                var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
+
+                //Get new role
+                var newRole = _context.UserRoles.Single(role => role.UserId == gebruiker.Id);
+                //Delete old record
+                _context.Remove(_context.UserRoles.Single(role => role.UserId == gebruiker.Id));
+                //Buid new record
+                newRole.RoleId = nieuweRol.Id;
+                //Add new record
+                _context.UserRoles.Add(newRole);
+                
+                //Save all changes to DB Table
+                _context.SaveChanges();          
+            }
+            else
+            {
+                //Return with error
+                return View("ShowUser",gebruikersDetail);
+            }
+
+            return RedirectToAction("Index");
         }
 
 
