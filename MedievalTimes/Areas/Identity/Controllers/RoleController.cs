@@ -71,6 +71,7 @@ namespace MedievalTimes.Areas.Identity.Controllers
         /// <param name="gebruikersDetail"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Leader")]
         [AutoValidateAntiforgeryToken]
         public IActionResult ChangeUserRole(UserDetailVM gebruikersDetail)
         {
@@ -78,20 +79,18 @@ namespace MedievalTimes.Areas.Identity.Controllers
             {
                 //Get eventually new Role for user from from
                 var roleName = Enum.GetName(typeof(ApplicationUser.GebruikersRol), Convert.ToInt32(gebruikersDetail.GebruikersRol));
-                var nieuweRol = _context.Roles.Where(rl => rl.Name == roleName).FirstOrDefault();
+                var nieuweRol = _context.Roles.Single(rl => rl.Name == roleName);
+                var oldRol = _context.UserRoles.Single(rl => rl.UserId == gebruikersDetail.Gebruikers.Id);
 
                 //Set new role to the selected user (Single() works, because GuidIds are unique)
                 var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
 
-                //Get new role
-                var newRole = _context.UserRoles.Single(role => role.UserId == gebruiker.Id);
+                //Get new role                
+                IdentityUserRole<string> newRole = new IdentityUserRole<string> { UserId = gebruiker.Id, RoleId = nieuweRol.Id };       
                 //Delete old record
-                _context.Remove(_context.UserRoles.Single(role => role.UserId == gebruiker.Id));
-                //Buid new record
-                newRole.RoleId = nieuweRol.Id;
+                _context.UserRoles.Remove(oldRol);
                 //Add new record
-                _context.UserRoles.Add(newRole);
-                
+                _context.UserRoles.Add(newRole);                
                 //Save all changes to DB Table
                 _context.SaveChanges();          
             }
@@ -106,6 +105,8 @@ namespace MedievalTimes.Areas.Identity.Controllers
 
 
     }
+
+
 }
 
 
