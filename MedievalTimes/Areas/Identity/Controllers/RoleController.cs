@@ -59,7 +59,7 @@ namespace MedievalTimes.Areas.Identity.Controllers
                 gebruikersLijst.Add(gebruiker);
             }
 
-            //Order 
+            //Order correctrole, then on username alfa
             gebruikersLijst = gebruikersLijst.OrderBy(gebr => gebr.correctRole).ThenBy(gbr => gbr.userName).ToList();
 
             //Show userlisting (order by correctrole)
@@ -106,12 +106,19 @@ namespace MedievalTimes.Areas.Identity.Controllers
                 var roleName = Enum.GetName(typeof(ApplicationUser.GebruikersRol), Convert.ToInt32(gebruikersDetail.GebruikersRol));
                 var nieuweRol = _context.Roles.Single(rl => rl.Name == roleName);
                 var oldRol = _context.UserRoles.Single(rl => rl.UserId == gebruikersDetail.Gebruikers.Id);
+                var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
 
                 //Check if at least 1 leader role keeps present <======================================================================================================
+                var leaderRoleId = _context.Roles.Where(rolename => rolename.Name == "Leader").FirstOrDefault().Id;
+                var aantalLeaders = _context.UserRoles.Where(roleid => roleid.RoleId == leaderRoleId).Count();
+                var currentUserRole = _context.UserRoles.Single(plr => plr.UserId == gebruiker.Id);
 
-
-                //Set new role to the selected user (Single() works, because GuidIds are unique)
-                var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
+                //Check : are their remaining leaders, is the change effecting a leader to a not leader role
+                if ((aantalLeaders == 1) && (currentUserRole.RoleId == leaderRoleId) && (nieuweRol.Id != leaderRoleId) )
+                {
+                    //Cant change role, because there wont be any leaders left 
+                    var alert = "You can't change the role of this user, because their won't be any leaders left.";
+                }
 
                 //Eventuele veranderingen synchroniseren met het betreffende useraccount
                 gebruiker.Name = gebruikersDetail.Gebruikers.Name;
