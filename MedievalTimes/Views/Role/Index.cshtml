@@ -1,8 +1,16 @@
-﻿@model List<string>
+﻿@model List<UserListVM>
 
 <h1>Current users:</h1>
 <hr />
-@foreach (var name in @Model)
+@foreach (var gebruiker in @Model)
 {
-    <a asp-area="Identity" asp-controller="Role" asp-action="ShowUser" asp-route-userName="@name"><h2>@name</h2></a>
+    @if (gebruiker.correctRole)
+    {
+        <a asp-area="Identity" asp-controller="Role" asp-action="ShowUser" asp-route-userName="@gebruiker.userName"><h2>@gebruiker.userName</h2></a>
+    }
+    else
+    {
+        <a asp-area="Identity" asp-controller="Role" asp-action="ShowUser" asp-route-userName="@gebruiker.userName"><h2 class="text-danger">@gebruiker.userName</h2></a>
+    }
+
 }

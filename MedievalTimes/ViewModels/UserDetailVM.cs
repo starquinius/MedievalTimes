@@ -12,5 +12,6 @@ namespace MedievalTimes.ViewModels
         public ApplicationUser Gebruikers { get; set; }
         public IdentityRole GebruikersIDRol { get; set; }
         public String GebruikersRol { get; set; }
+        public bool CorrectRole { get; set; }
     }
 }

@@ -42,9 +42,28 @@ namespace MedievalTimes.Areas.Identity.Controllers
 
         public IActionResult Index()
         {
-            var namenLijst = _context.Users.Select(user => user.Name).ToList();
+            //init
+            List<UserListVM> gebruikersLijst = new List<UserListVM>();
 
-            return View(namenLijst);
+            //add each user to list (checks if role is desired role)
+            foreach (var user in _context.Users)
+            {
+                //Put correct info in gebruiker
+                UserListVM gebruiker = new UserListVM()
+                {
+                    userName = user.Name,
+                    correctRole = CheckRole(user)
+                };
+
+                //Add gebruiker to list
+                gebruikersLijst.Add(gebruiker);
+            }
+
+            //Order 
+            gebruikersLijst = gebruikersLijst.OrderBy(gebr => gebr.correctRole).ToList();
+
+            //Show userlisting (order by correctrole)
+            return View(gebruikersLijst);
         }
 
         /// <summary>
@@ -57,17 +76,15 @@ namespace MedievalTimes.Areas.Identity.Controllers
 
             //Get selected Userinfo         
             var gebruiker = _context.Users.Where(usr => usr.Name == userName).FirstOrDefault();
-            //Get role of the selected user
-            var gebruikersRolId = _context.UserRoles.Where(rle => rle.UserId == gebruiker.Id).FirstOrDefault();
-            var gebruikersRol = _context.Roles.Where(rl => rl.Id == gebruikersRolId.RoleId).FirstOrDefault();
 
-            //Build ViewModel
             UserDetailVM gebruikersDetail = new UserDetailVM()
             {
                 Gebruikers = gebruiker,
-                GebruikersIDRol = gebruikersRol,
-                GebruikersRol = gebruikersRolId.ToString()                
+                GebruikersIDRol = GetRole(gebruiker),
+                GebruikersRol = GetRole(gebruiker).ToString(),
+                CorrectRole = CheckRole(gebruiker)
             };
+
 
             //Show ViewModel
             return View(gebruikersDetail);
@@ -93,23 +110,60 @@ namespace MedievalTimes.Areas.Identity.Controllers
                 //Set new role to the selected user (Single() works, because GuidIds are unique)
                 var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
 
+                //Eventuele veranderingen synchroniseren met het betreffende useraccount
+                gebruiker.Name = gebruikersDetail.Gebruikers.Name;
+                gebruiker.UserName = gebruikersDetail.Gebruikers.UserName;
+
                 //Get new role                
-                IdentityUserRole<string> newRole = new IdentityUserRole<string> { UserId = gebruiker.Id, RoleId = nieuweRol.Id };       
+                IdentityUserRole<string> newRole = new IdentityUserRole<string> { UserId = gebruiker.Id, RoleId = nieuweRol.Id };
                 //Delete old record
                 _context.UserRoles.Remove(oldRol);
                 //Add new record
-                _context.UserRoles.Add(newRole);                
+                _context.UserRoles.Add(newRole);
+                //Update userrecord
+                _context.Users.Update(gebruiker);
                 //Save all changes to DB Table
-                _context.SaveChanges();          
+                _context.SaveChanges();
             }
             //Get username which is changed
             var changedUserName = gebruikersDetail.Gebruikers.Name;
 
-            //Return to the corrected user account
-            return RedirectToAction("ShowUser", "Role", new { userName = changedUserName } );
+            //Return to the corrected user account with correct parameter
+            return RedirectToAction("ShowUser", "Role", new { userName = changedUserName });
         }
 
+        /// <summary>
+        /// Check if desiredrole is current role
+        /// </summary>
+        /// <param name="gebruiker"></param>
+        /// <returns></returns>
+        public bool CheckRole(ApplicationUser gebruiker)
+        {
+            //init
+            var check = false;
 
+            //check desiredrole vs current role
+            if (GetRole(gebruiker).Name == gebruiker.DesiredRol.ToString())
+                check = true;
+
+            //return check value
+            return check;
+        }
+
+        /// <summary>
+        /// Get correct Role for selected user
+        /// </summary>
+        /// <param name="gebruiker"></param>
+        /// <returns></returns>
+        public IdentityRole GetRole(ApplicationUser gebruiker)
+        {
+            //Get RoleId and RoleName
+            var gebruikersRolId = _context.UserRoles.Where(rle => rle.UserId == gebruiker.Id).FirstOrDefault();
+            var gebruikersRol = _context.Roles.Where(rl => rl.Id == gebruikersRolId.RoleId).FirstOrDefault();
+
+            //Return Role
+            return gebruikersRol;
+        }
     }
 
 
