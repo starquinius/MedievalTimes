@@ -13,11 +13,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedievalTimes.Areas.Identity.Controllers
 {
+    //*****************************************************************************************
+    //I made this controller in the Identity Area, because it's about changing Identity Records
+    //*****************************************************************************************
+
+    //Only Leader role can change records within the Identity Tables.
     [Authorize(Roles = "Leader")]
     public class RoleController : Controller
     {
-
-        //****************************************************************** Injections
+        //****************************************************************************************************************************************
+        //* Injections *
+        //**************
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -30,7 +36,9 @@ namespace MedievalTimes.Areas.Identity.Controllers
             _roleManager = roleManager;
         }
 
-        //****************************************************************** Methods
+        //****************************************************************************************************************************************
+        //* Methods *
+        //***********
 
         public IActionResult Index()
         {
@@ -94,13 +102,11 @@ namespace MedievalTimes.Areas.Identity.Controllers
                 //Save all changes to DB Table
                 _context.SaveChanges();          
             }
-            else
-            {
-                //Return with error
-                return View("ShowUser",gebruikersDetail);
-            }
+            //Get username which is changed
+            var changedUserName = gebruikersDetail.Gebruikers.Name;
 
-            return RedirectToAction("Index");
+            //Return to the corrected user account
+            return RedirectToAction("ShowUser", "Role", new { userName = changedUserName } );
         }
 
 
