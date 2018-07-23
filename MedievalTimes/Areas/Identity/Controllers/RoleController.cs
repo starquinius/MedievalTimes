@@ -60,7 +60,7 @@ namespace MedievalTimes.Areas.Identity.Controllers
             }
 
             //Order 
-            gebruikersLijst = gebruikersLijst.OrderBy(gebr => gebr.correctRole).ToList();
+            gebruikersLijst = gebruikersLijst.OrderBy(gebr => gebr.correctRole).ThenBy(gbr => gbr.userName).ToList();
 
             //Show userlisting (order by correctrole)
             return View(gebruikersLijst);
@@ -106,6 +106,9 @@ namespace MedievalTimes.Areas.Identity.Controllers
                 var roleName = Enum.GetName(typeof(ApplicationUser.GebruikersRol), Convert.ToInt32(gebruikersDetail.GebruikersRol));
                 var nieuweRol = _context.Roles.Single(rl => rl.Name == roleName);
                 var oldRol = _context.UserRoles.Single(rl => rl.UserId == gebruikersDetail.Gebruikers.Id);
+
+                //Check if at least 1 leader role keeps present <======================================================================================================
+
 
                 //Set new role to the selected user (Single() works, because GuidIds are unique)
                 var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
