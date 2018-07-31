@@ -1,0 +1,106 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model CharacterVM
+
+<p>
+    To venture into the worlds of the medieval times game, you first need to create a character. The character you create is your alter ego in the fantasy realms of this game, a make-believe person who is under your control and through whom you vicariously explore the world which has been created.
+</p>
+
+<form asp-controller="CreateChar" asp-action="SubmitChar" method="post">
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+
+            <div class="item active">
+                <h1>Character Specific Info</h1>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sexe"></label>
+                    <select asp-for="Sexe" class="form-control" asp-items="Html.GetEnumSelectList<Sexe>()"></select> >
+                </div>
+                <div class="form-group">
+                    <label asp-for="Alignment"></label>
+                    <select asp-for="Alignment" class="form-control" asp-items="Html.GetEnumSelectList<Alignment>()"></select> >
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attitude"></label>
+                    <select asp-for="Attitude" class="form-control" asp-items="Html.GetEnumSelectList<Attitude>()"></select> >
+                </div>
+            </div>
+
+            <div class="item">
+                <h1>Character Attributes</h1>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="Attributes.Strength"></label>
+                    <input asp-for="Attributes.Strength" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attributes.Dexterity"></label>
+                    <input asp-for="Attributes.Dexterity" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attributes.Constitution"></label>
+                    <input asp-for="Attributes.Constitution" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attributes.Intelligence"></label>
+                    <input asp-for="Attributes.Intelligence" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attributes.Wisdom"></label>
+                    <input asp-for="Attributes.Wisdom" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Attributes.Charisma"></label>
+                    <input asp-for="Attributes.Charisma" class="form-control">
+                </div>
+            </div>
+
+            <div class="item">
+                <p>Character Race:</p>
+
+            </div>
+
+            <div class="item">
+                <p>Character Class:</p>
+
+            </div>
+
+            <div class="item">
+                <p>Character Weapon Skills:</p>
+
+            </div>
+
+            <div class="item">
+                <p>Character Non-Weapon Skills:</p>
+
+            </div>
+        </div>
+
+
+
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <button type="submit" class="btn btn-default"><b>Save Character</b></button>
+</form>

@@ -70,6 +70,10 @@ namespace MedievalTimes
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "CharCreationDefault",
+                    template: "CharCreation/{controller=CreateChar}/{action=StartCreation}/{id?}");
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

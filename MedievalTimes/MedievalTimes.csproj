@@ -11,7 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\CharCreation\Data\" />
     <Folder Include="Areas\Identity\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\CharCreation\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -108,7 +108,7 @@ namespace MedievalTimes.Areas.Identity.Controllers
                 var oldRol = _context.UserRoles.Single(rl => rl.UserId == gebruikersDetail.Gebruikers.Id);
                 var gebruiker = _context.Users.Single(usr => usr.Id == gebruikersDetail.Gebruikers.Id);
 
-                //Check if at least 1 leader role keeps present <======================================================================================================
+                //Check if at least 1 leader role keeps present <==================================================================================================================================
                 var leaderRoleId = _context.Roles.Where(rolename => rolename.Name == "Leader").FirstOrDefault().Id;
                 var aantalLeaders = _context.UserRoles.Where(roleid => roleid.RoleId == leaderRoleId).Count();
                 var currentUserRole = _context.UserRoles.Single(plr => plr.UserId == gebruiker.Id);
