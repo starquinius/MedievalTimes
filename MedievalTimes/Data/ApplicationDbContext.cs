@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MedievalTimes.Areas.CharCreation.Models;
 using MedievalTimes.Areas.Identity.Data;
+using MedievalTimes.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,5 +15,9 @@ namespace MedievalTimes.Data
             : base(options)
         {
         }
+
+        public DbSet<RacialAttributeAdjustment> RacialAttrReq { get; set; }
+        public DbSet<Race> Races { get; set; }
+
     }
 }

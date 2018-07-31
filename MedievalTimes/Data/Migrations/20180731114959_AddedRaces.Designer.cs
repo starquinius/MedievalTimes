@@ -4,14 +4,16 @@ using MedievalTimes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MedievalTimes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180731114959_AddedRaces")]
+    partial class AddedRaces
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,56 +130,6 @@ namespace MedievalTimes.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("MedievalTimes.Models.RacialAttributeAdjustment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ChaModifier");
-
-                    b.Property<int>("ConModifier");
-
-                    b.Property<int>("DexModifier");
-
-                    b.Property<int>("IntModifier");
-
-                    b.Property<int>("MaxCha");
-
-                    b.Property<int>("MaxCon");
-
-                    b.Property<int>("MaxDex");
-
-                    b.Property<int>("MaxInt");
-
-                    b.Property<int>("MaxStr");
-
-                    b.Property<int>("MaxWis");
-
-                    b.Property<int>("MinCha");
-
-                    b.Property<int>("MinCon");
-
-                    b.Property<int>("MinDex");
-
-                    b.Property<int>("MinInt");
-
-                    b.Property<int>("MinStr");
-
-                    b.Property<int>("MinWis");
-
-                    b.Property<Guid?>("RaceId");
-
-                    b.Property<int>("StrModifier");
-
-                    b.Property<int>("WisModifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RaceId");
-
-                    b.ToTable("RacialAttrReq");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -311,13 +263,6 @@ namespace MedievalTimes.Data.Migrations
                     b.HasOne("MedievalTimes.Areas.CharCreation.Models.Dice", "WeightModifier")
                         .WithMany()
                         .HasForeignKey("WeightModifierDiceId");
-                });
-
-            modelBuilder.Entity("MedievalTimes.Models.RacialAttributeAdjustment", b =>
-                {
-                    b.HasOne("MedievalTimes.Areas.CharCreation.Models.Race", "Race")
-                        .WithMany()
-                        .HasForeignKey("RaceId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

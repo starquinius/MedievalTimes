@@ -22,19 +22,19 @@
             <div class="item active">
                 <h1>Character Specific Info</h1>
                 <hr />
-                <div class="form-group">
+                <div class="form-group text-center">
                     <label asp-for="Name"></label>
                     <input asp-for="Name" class="form-control">
                 </div>
-                <div class="form-group">
+                <div class="form-group text-center">
                     <label asp-for="Sexe"></label>
                     <select asp-for="Sexe" class="form-control" asp-items="Html.GetEnumSelectList<Sexe>()"></select> >
                 </div>
-                <div class="form-group">
+                <div class="form-group text-center">
                     <label asp-for="Alignment"></label>
                     <select asp-for="Alignment" class="form-control" asp-items="Html.GetEnumSelectList<Alignment>()"></select> >
                 </div>
-                <div class="form-group">
+                <div class="form-group text-center">
                     <label asp-for="Attitude"></label>
                     <select asp-for="Attitude" class="form-control" asp-items="Html.GetEnumSelectList<Attitude>()"></select> >
                 </div>
@@ -71,7 +71,10 @@
 
             <div class="item">
                 <p>Character Race:</p>
-
+                <div class="container">
+                    <div class="col-lg-3">
+                    </div>
+                </div>
             </div>
 
             <div class="item">
