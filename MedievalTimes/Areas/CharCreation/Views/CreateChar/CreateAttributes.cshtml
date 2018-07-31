@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model CharacterVM
+
+<h1>Character Attributes</h1>
+<hr />
+<form asp-controller="CreateChar" asp-action="SubmitChar" asp-route-pageNr=2 method="post">
+
+    <div class="form-group">
+        <label asp-for="Attributes.Strength"></label>
+        <input asp-for="Attributes.Strength" class="form-control" id="strAttribute" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="Attributes.Dexterity"></label>
+        <input asp-for="Attributes.Dexterity" class="form-control" id="dexAttribute" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="Attributes.Constitution"></label>
+        <input asp-for="Attributes.Constitution" class="form-control" id="conAttribute" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="Attributes.Intelligence"></label>
+        <input asp-for="Attributes.Intelligence" class="form-control" id="intAttribute" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="Attributes.Wisdom"></label>
+        <input asp-for="Attributes.Wisdom" class="form-control" id="wisAttribute" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="Attributes.Charisma"></label>
+        <input asp-for="Attributes.Charisma" class="form-control" id="chaAttribute" readonly>
+    </div>
+    <div class="text-center">
+        <button type="button" id="rollAttributes">ReRoll Dices</button>
+    </div>
+
+    <button type="submit" class="btn btn-default"><b>Next Page</b></button>
+</form>

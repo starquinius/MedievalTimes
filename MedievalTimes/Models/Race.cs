@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MedievalTimes.Areas.CharCreation.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MedievalTimes.Areas.CharCreation.Models
+namespace MedievalTimes.Models
 {
     public class Race
     {

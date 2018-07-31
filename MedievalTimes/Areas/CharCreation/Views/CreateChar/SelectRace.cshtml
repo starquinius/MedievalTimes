@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model List<Race>
+
+<h1>Character Race</h1>
+<hr />
+<form asp-controller="CreateChar" asp-action="SubmitChar" asp-route-pageNr=3 method="post">
+    
+    @for (var teller = 0; teller < Model.Count(); teller++)
+    {
+        @Model[teller].Name
+    }
+
+    <button type="submit" class="btn btn-default"><b>Next Page</b></button>
+</form>
