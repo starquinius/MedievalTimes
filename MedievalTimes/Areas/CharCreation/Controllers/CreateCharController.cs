@@ -9,6 +9,7 @@ using MedievalTimes.Models;
 using MedievalTimes.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MedievalTimes.Areas.CharCreation.Controllers
 {
@@ -41,27 +42,52 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                 case 1:
                     return View("~/Areas/CharCreation/Views/CreateChar/CreateAttributes.cshtml", characterVM);
                 case 2:
-                    var raceList = GetRaces(characterVM);
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", raceList);
+                    characterVM = GetRaces(characterVM);
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", characterVM);
+                case 3:
+                    break;
             }
 
             //Or when first page
             return View("~/Areas/CharCreation/Views/CreateChar/StartCreation.cshtml", characterVM);
         }
-
-
-        private List<Race> GetRaces(CharacterVM characterVM)
+        
+        //****************************************************************** Generic Methods
+        /// <summary>
+        /// Filter the races with the attributes requirements
+        /// </summary>
+        /// <param name="characterVM"></param>
+        /// <returns></returns>
+        private CharacterVM GetRaces(CharacterVM characterVM)
         {
+
             var raceList = _context.RacialAttrReq.Where(req => (req.MinStr <= characterVM.Attributes.Strength) && (req.MaxStr >= characterVM.Attributes.Strength)
-                                                            && (req.MinDex <= characterVM.Attributes.Dexterity) && (req.MaxDex >= characterVM.Attributes.Dexterity)
-                                                            && (req.MinCon <= characterVM.Attributes.Constitution) && (req.MaxCon >= characterVM.Attributes.Constitution)
-                                                            && (req.MinInt <= characterVM.Attributes.Intelligence) && (req.MaxInt >= characterVM.Attributes.Intelligence)
-                                                            && (req.MinWis <= characterVM.Attributes.Wisdom) && (req.MaxWis >= characterVM.Attributes.Wisdom)
-                                                            && (req.MinCha <= characterVM.Attributes.Charisma) && (req.MaxCha >= characterVM.Attributes.Charisma))
+                                                           && (req.MinDex <= characterVM.Attributes.Dexterity) && (req.MaxDex >= characterVM.Attributes.Dexterity)
+                                                           && (req.MinCon <= characterVM.Attributes.Constitution) && (req.MaxCon >= characterVM.Attributes.Constitution)
+                                                           && (req.MinInt <= characterVM.Attributes.Intelligence) && (req.MaxInt >= characterVM.Attributes.Intelligence)
+                                                           && (req.MinWis <= characterVM.Attributes.Wisdom) && (req.MaxWis >= characterVM.Attributes.Wisdom)
+                                                           && (req.MinCha <= characterVM.Attributes.Charisma) && (req.MaxCha >= characterVM.Attributes.Charisma))
                                                         .Select(records => records.Race)
                                                         .ToList();
 
-            return raceList;
+            RaceVM raceVM = new RaceVM();
+
+            foreach(var race in raceList)
+            {
+                raceVM = new RaceVM
+                {
+                    Race = race,
+                    Chosen = false
+                     
+                };
+
+                characterVM.ChoosableRaces.Add(raceVM);
+            }
+
+
+            return characterVM;
         }
+
+
     }
 }

@@ -32,6 +32,9 @@ namespace MedievalTimes.Areas.CharCreation.ViewModels
         [Display(Name = "Character's Race")]
         public Race Races { get; set; }
 
+        [Display(Name = "Character's Allowed Races")]
+        public List<RaceVM> ChoosableRaces { get; set; }
+
 
     }
 }
