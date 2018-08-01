@@ -28,7 +28,7 @@ namespace MedievalTimes.Data
         public async Task Seed()
         {
             //Seed Roles
-            if (_context.Users.Count() != 0)
+            if (_context.Users.Count() == 0)
             {
                 RoleRepo RRepo = new RoleRepo(_userManager, _roleManager, _context);
                 await RRepo.AddRole("Player");
@@ -43,7 +43,7 @@ namespace MedievalTimes.Data
             }
 
             //Seed Races
-            if (_context.Races.Count() == 0)
+            if (_context.Races.Count() != 0)
             {
                 Race[] race = new Race[]{
                     new Race{Name="Human",BaseAge=15, AgeModifier = new Dice(){ NrDice=1, DiceSide=4, Modifier=0}, BaseMaxAge=90, MaxAgeModifier = new Dice(){NrDice=2, DiceSide=20, Modifier=0}, BaseHeightF=59, BaseHeightM=60, HeightModifier = new Dice{NrDice=2, DiceSide=10, Modifier=0 }, BaseWeightF=100, BaseWeightM=140, WeightModifier=new Dice{ NrDice=6, DiceSide=10, Modifier=0}, RaceId = new Guid() },
@@ -71,8 +71,23 @@ namespace MedievalTimes.Data
                     await _context.AddRangeAsync(raceAttrAdj);
                 }
 
-                await _context.SaveChangesAsync();
+                //Seed Table (Class Attribute Requirement & Prime Requisite & Allowed Races)
+                if (_context.ClassAttrReq.Count() == 0)
+                {
+                    ClassAbilityRequirements[] classAbilityRequirements = new ClassAbilityRequirements[]
+                    {
+                        new ClassAbilityRequirements{ Id=new Guid(), Beroep = Beroep.fighter, MinStr=9, StrPrime=true, MinCon=0, ConPrime=false, MinDex=0, DexPrime=false, MinInt=0, IntPrime=false, MinWis=0, WisPrime=false, MinCha=0, ChaPrime=false,  RaceDwarf=true, RaceElf=true, RaceGnome=true, RaceHalfElf=true, RaceHalfling=true, RaceHuman=true},
+                        new ClassAbilityRequirements{ Id=new Guid(), Beroep = Beroep.mage, MinStr=0, StrPrime=false, MinCon=0, ConPrime=false, MinDex=0, DexPrime=false, MinInt=9, IntPrime=true, MinWis=0, WisPrime=false, MinCha=0, ChaPrime=false, RaceDwarf=false, RaceElf=true, RaceGnome=false, RaceHalfElf=true, RaceHalfling=false, RaceHuman=true},
+                        new ClassAbilityRequirements{ Id=new Guid(), Beroep = Beroep.cleric, MinStr=0, StrPrime=false, MinCon=0, ConPrime=false, MinDex=0, DexPrime=false, MinInt=0, IntPrime=false, MinWis=9, WisPrime=true, MinCha=0, ChaPrime=false, RaceDwarf=true, RaceElf=true, RaceGnome=true, RaceHalfElf=true, RaceHalfling=true, RaceHuman=true}
+
+                    };
+                    await _context.AddRangeAsync(classAbilityRequirements);
+                }
             }
+
+
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -35,6 +35,10 @@ namespace MedievalTimes.Areas.CharCreation.ViewModels
         [Display(Name = "Character's Allowed Races")]
         public IEnumerable<RaceVM> ChoosableRaces { get; set; }
 
+        [Display(Name = "Character's Class")]
+        public Beroep Beroepen { get; set; }
 
+        [Display(Name = "Character's Allowed Classes")]
+        public IEnumerable<ClassVM> ChoosableClasses { get; set; }
     }
 }

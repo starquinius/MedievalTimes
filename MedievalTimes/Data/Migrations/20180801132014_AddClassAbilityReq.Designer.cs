@@ -4,14 +4,16 @@ using MedievalTimes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MedievalTimes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180801132014_AddClassAbilityReq")]
+    partial class AddClassAbilityReq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,8 +53,6 @@ namespace MedievalTimes.Data.Migrations
                     b.Property<int>("Attitude");
 
                     b.Property<Guid?>("AttributesId");
-
-                    b.Property<int>("Beroepen");
 
                     b.Property<bool>("IsFinished");
 
@@ -169,18 +169,6 @@ namespace MedievalTimes.Data.Migrations
 
                     b.Property<int>("MinWis");
 
-                    b.Property<bool>("RaceDwarf");
-
-                    b.Property<bool>("RaceElf");
-
-                    b.Property<bool>("RaceGnome");
-
-                    b.Property<bool>("RaceHalfElf");
-
-                    b.Property<bool>("RaceHalfling");
-
-                    b.Property<bool>("RaceHuman");
-
                     b.Property<bool>("StrPrime");
 
                     b.Property<bool>("WisPrime");
@@ -209,6 +197,8 @@ namespace MedievalTimes.Data.Migrations
 
                     b.Property<int>("BaseWeightM");
 
+                    b.Property<Guid?>("ClassAbilityRequirementsId");
+
                     b.Property<Guid?>("HeightModifierDiceId");
 
                     b.Property<Guid?>("MaxAgeModifierDiceId");
@@ -220,6 +210,8 @@ namespace MedievalTimes.Data.Migrations
                     b.HasKey("RaceId");
 
                     b.HasIndex("AgeModifierDiceId");
+
+                    b.HasIndex("ClassAbilityRequirementsId");
 
                     b.HasIndex("HeightModifierDiceId");
 
@@ -410,6 +402,10 @@ namespace MedievalTimes.Data.Migrations
                     b.HasOne("MedievalTimes.Areas.CharCreation.Models.Dice", "AgeModifier")
                         .WithMany()
                         .HasForeignKey("AgeModifierDiceId");
+
+                    b.HasOne("MedievalTimes.Models.ClassAbilityRequirements")
+                        .WithMany("StrRacesAllowed")
+                        .HasForeignKey("ClassAbilityRequirementsId");
 
                     b.HasOne("MedievalTimes.Areas.CharCreation.Models.Dice", "HeightModifier")
                         .WithMany()

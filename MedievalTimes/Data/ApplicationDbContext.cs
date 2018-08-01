@@ -17,6 +17,7 @@ namespace MedievalTimes.Data
         }
 
         public DbSet<RacialAttributeAdjustment> RacialAttrReq { get; set; }
+        public DbSet<ClassAbilityRequirements> ClassAttrReq { get; set; }
 
         public DbSet<Race> Races { get; set; }
 

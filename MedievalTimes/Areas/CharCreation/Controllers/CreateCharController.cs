@@ -83,7 +83,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     _context.Update(character);
                     _context.SaveChanges();
                     //Filter choosable classes
-                    characterVM = GetClasses(characterVM);
+                    characterVM = GetClasses(character, characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
                 //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 4:
@@ -153,8 +153,15 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             return character;
         }
 
-        private CharacterVM GetClasses(CharacterVM characterVM)
+        /// <summary>
+        /// Filter the classes according to race, alignment and attributes
+        /// </summary>
+        /// <param name="characterVM"></param>
+        /// <returns></returns>
+        private CharacterVM GetClasses(Character character, CharacterVM characterVM)
         {
+            //var classList = _context.ClassAttrReq.Where(req => req.RacesAllowed.Contains<Race>(character.Races)).ToList();
+
             return characterVM;
         }
 

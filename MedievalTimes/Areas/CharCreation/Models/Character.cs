@@ -31,5 +31,8 @@ namespace MedievalTimes.Areas.CharCreation.Models
 
         [Display(Name = "Character's Race")]
         public Race Races { get; set; }
+
+        [Display(Name = "Character's Class")]
+        public Beroep Beroepen { get; set; }
     }
 }
