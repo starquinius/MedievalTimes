@@ -37,7 +37,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
 
         public IActionResult SubmitChar(CharacterVM characterVM, int pageNr)
         {
-            Character character;
+            Character character = new Character();
 
             switch (pageNr)
             {                
@@ -52,8 +52,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                         IsFinished = false
                     };
                     //To recognize the build of correct character
-                    character.BuildId = character.Id;
-                    characterVM.BuildId = character.BuildId;
+                     characterVM.BuildId = character.Id;
                     //Save temp character to Db
                     _context.Add(character);
                     _context.SaveChanges();
@@ -61,7 +60,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     return View("~/Areas/CharCreation/Views/CreateChar/CreateAttributes.cshtml", characterVM);
                 case 2:
                     //Get correct build character
-                    character = _context.Characters.Single(record => record.BuildId == characterVM.BuildId);
+                    character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
                     //Place Attribute Info
                     character.Attributes = characterVM.Attributes;
                     //Save temp character to Db
@@ -72,7 +71,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", characterVM);
                 case 3:
                     //Get correct build character
-                    character = _context.Characters.Single(record => record.BuildId == characterVM.BuildId);
+                    character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
 
                     characterVM = GetClasses(characterVM);
                     characterVM.Races = characterVM.ChoosableRaces.Where(race => race.Chosen = true).FirstOrDefault().Race;

@@ -12,7 +12,6 @@ namespace MedievalTimes.Areas.CharCreation.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public Guid BuildId { get; set; }
         public bool IsFinished { get; set; }
 
         [Display(Name = "Character's Name")]
