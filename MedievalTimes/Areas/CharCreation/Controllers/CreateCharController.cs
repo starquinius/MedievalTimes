@@ -37,6 +37,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
 
         public IActionResult SubmitChar(CharacterVM characterVM, int pageNr)
         {
+
             switch (pageNr)
             {                
                 case 1:
@@ -45,7 +46,12 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     characterVM = GetRaces(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", characterVM);
                 case 3:
-                    break;
+                    characterVM = GetClasses(characterVM);
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
+                case 4:
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
+                case 5:
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
             }
 
             //Or when first page
@@ -71,23 +77,27 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                                                         .ToList();
 
             RaceVM raceVM = new RaceVM();
+            List<RaceVM> raceVMList = new List<RaceVM>();
 
             foreach(var race in raceList)
             {
                 raceVM = new RaceVM
                 {
                     Race = race,
-                    Chosen = false
-                     
+                    Chosen = false                     
                 };
-
-                characterVM.ChoosableRaces.Add(raceVM);
+                raceVMList.Add(raceVM);
             }
 
+            characterVM.ChoosableRaces = raceVMList;
 
             return characterVM;
         }
 
+        private CharacterVM GetClasses(CharacterVM characterVM)
+        {
+            return characterVM;
+        }
 
     }
 }

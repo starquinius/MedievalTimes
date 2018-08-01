@@ -8,6 +8,11 @@
 <hr />
 <form asp-controller="CreateChar" asp-action="SubmitChar" asp-route-pageNr=2 method="post">
 
+    @Html.HiddenFor(model => model.Alignment)
+    @Html.HiddenFor(model => model.Attitude)
+    @Html.HiddenFor(model => model.Name)
+    @Html.HiddenFor(model => model.Sexe)
+
     <div class="form-group">
         <label asp-for="Attributes.Strength"></label>
         <input asp-for="Attributes.Strength" class="form-control" id="strAttribute" readonly>
