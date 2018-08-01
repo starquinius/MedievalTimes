@@ -10,6 +10,7 @@ using MedievalTimes.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedievalTimes.Areas.CharCreation.Controllers
 {
@@ -58,6 +59,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     characterVM.BuildId = character.Id;
                     //Goto Attributes
                     return View("~/Areas/CharCreation/Views/CreateChar/CreateAttributes.cshtml", characterVM);
+
                 case 2:
                     //Get correct build character
                     character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
@@ -70,27 +72,20 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     characterVM = GetRaces(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", characterVM);
 
-
-
-
-
-//****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 3:
                     //Get correct build character
-                    character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
+                    character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
                     //Place chosen race                    
-                    characterVM.Races = _context.Races.Single(record => record.Name == characterVM.Races.Name);
+                    character.Races = _context.Races.Single(record => record.Name == characterVM.Races.Name);
+                    //Update attributes according to race
+                    character = UpdateAttributes(character);
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
                     //Filter choosable classes
                     characterVM = GetClasses(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
-
-
-
-
-
+                //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 4:
                     
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
@@ -135,6 +130,27 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             characterVM.ChoosableRaces = raceVMList;
 
             return characterVM;
+        }
+
+        /// <summary>
+        /// Update the attributes according to the chosen race
+        /// </summary>
+        /// <param name="character"></param>
+        /// <returns></returns>
+        private Character UpdateAttributes (Character character)
+        {
+            //Get correct record (race line) from adjustment table
+            RacialAttributeAdjustment attrAdj = new RacialAttributeAdjustment();
+            attrAdj = _context.RacialAttrReq.Where(record => record.Race.RaceId == character.Races.RaceId).SingleOrDefault();
+            //Change the correct attributes accordingly
+            character.Attributes.Strength += attrAdj.StrModifier;
+            character.Attributes.Dexterity += attrAdj.DexModifier;
+            character.Attributes.Constitution += attrAdj.ConModifier;
+            character.Attributes.Intelligence += attrAdj.IntModifier;
+            character.Attributes.Wisdom += attrAdj.WisModifier;
+            character.Attributes.Charisma += attrAdj.ChaModifier;
+
+            return character;
         }
 
         private CharacterVM GetClasses(CharacterVM characterVM)
