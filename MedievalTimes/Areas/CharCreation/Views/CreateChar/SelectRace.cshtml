@@ -8,22 +8,13 @@
 <hr />
 <form asp-controller="CreateChar" asp-action="SubmitChar" asp-route-pageNr=3 method="post">
 
-    @Html.HiddenFor(model => model.Alignment)
-    @Html.HiddenFor(model => model.Attitude)
-    @Html.HiddenFor(model => model.Name)
-    @Html.HiddenFor(model => model.Sexe)
-    @Html.HiddenFor(model => model.Attributes.Strength)
-    @Html.HiddenFor(model => model.Attributes.Dexterity)
-    @Html.HiddenFor(model => model.Attributes.Constitution)
-    @Html.HiddenFor(model => model.Attributes.Intelligence)
-    @Html.HiddenFor(model => model.Attributes.Wisdom)
-    @Html.HiddenFor(model => model.Attributes.Charisma)
+    @Html.HiddenFor(model => model.BuildId)
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="col-lg-4">
             @foreach (var item in Model.ChoosableRaces)
             {
-                <input asp-for="@item.Chosen" type="radio" value="@item.Race" /> @item.Race.Name
+                <input asp-for="@item.Chosen" type="radio" value="@item.Chosen" /> @item.Race.Name
             }
         </div>
     </div>

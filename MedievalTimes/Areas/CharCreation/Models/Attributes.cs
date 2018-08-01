@@ -8,6 +8,9 @@ namespace MedievalTimes.Areas.CharCreation.Models
 {
     public class Attributes
     {
+        [Key]
+        public Guid Id { get; set; }
+
         [Display(Name = "Strength")]
         public int Strength { get; set; }
 

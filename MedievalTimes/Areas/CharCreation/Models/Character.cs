@@ -1,5 +1,4 @@
-﻿using MedievalTimes.Areas.CharCreation.Models;
-using MedievalTimes.Models;
+﻿using MedievalTimes.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,12 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using static MedievalTimes.Areas.CharCreation.Models.Enums;
 
-namespace MedievalTimes.Areas.CharCreation.ViewModels
+namespace MedievalTimes.Areas.CharCreation.Models
 {
-    public class CharacterVM
+    public class Character
     {
         [Key]
+        public Guid Id { get; set; }
         public Guid BuildId { get; set; }
+        public bool IsFinished { get; set; }
 
         [Display(Name = "Character's Name")]
         public string Name { get; set; }
@@ -31,10 +32,5 @@ namespace MedievalTimes.Areas.CharCreation.ViewModels
 
         [Display(Name = "Character's Race")]
         public Race Races { get; set; }
-
-        [Display(Name = "Character's Allowed Races")]
-        public List<RaceVM> ChoosableRaces { get; set; }
-
-
     }
 }

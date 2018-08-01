@@ -37,18 +37,48 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
 
         public IActionResult SubmitChar(CharacterVM characterVM, int pageNr)
         {
+            Character character;
 
             switch (pageNr)
             {                
                 case 1:
+                    //Place Generic Info in temp character
+                    character = new Character()
+                    {
+                        Id = new Guid(),
+                        Name = characterVM.Name,
+                        Alignment = characterVM.Alignment,
+                        Attitude = characterVM.Attitude,
+                        IsFinished = false
+                    };
+                    //To recognize the build of correct character
+                    character.BuildId = character.Id;
+                    characterVM.BuildId = character.BuildId;
+                    //Save temp character to Db
+                    _context.Add(character);
+                    _context.SaveChanges();
+                    //Goto Attributes
                     return View("~/Areas/CharCreation/Views/CreateChar/CreateAttributes.cshtml", characterVM);
                 case 2:
+                    //Get correct build character
+                    character = _context.Characters.Single(record => record.BuildId == characterVM.BuildId);
+                    //Place Attribute Info
+                    character.Attributes = characterVM.Attributes;
+                    //Save temp character to Db
+                    _context.Update(character);
+                    _context.SaveChanges();
+                    //Filter choosable classes
                     characterVM = GetRaces(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", characterVM);
                 case 3:
+                    //Get correct build character
+                    character = _context.Characters.Single(record => record.BuildId == characterVM.BuildId);
+
                     characterVM = GetClasses(characterVM);
+                    characterVM.Races = characterVM.ChoosableRaces.Where(race => race.Chosen = true).FirstOrDefault().Race;
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
                 case 4:
+                    
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
                 case 5:
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
