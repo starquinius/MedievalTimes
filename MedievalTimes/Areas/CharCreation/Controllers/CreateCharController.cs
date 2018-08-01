@@ -79,7 +79,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Get correct build character
                     character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
                     //Place chosen race                    
-                    characterVM.Races = characterVM.ChoosableRaces.Where(race => race.Chosen = true).FirstOrDefault().Race;
+                    characterVM.Races = _context.Races.Single(record => record.Name == characterVM.Races.Name);
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
@@ -127,8 +127,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             {
                 raceVM = new RaceVM
                 {
-                    Race = race,
-                    Chosen = false                     
+                    Race = race                 
                 };
                 raceVMList.Add(raceVM);
             }

@@ -16,7 +16,7 @@
             @foreach (var item in Model.ChoosableRaces)
             {
                 <div class="col-lg-3">
-                    <input asp-for="@item.Chosen" type="radio" value="@item.Chosen" /> @item.Race.Name
+                    <input asp-for="Races.Name" type="radio" value="@item.Race.Name" /> @item.Race.Name
                 </div>
             }
         </div>

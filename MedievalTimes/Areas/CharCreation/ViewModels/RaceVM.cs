@@ -10,6 +10,6 @@ namespace MedievalTimes.Areas.CharCreation.ViewModels
     public class RaceVM
     {
         public Race Race { get; set; }
-        public bool Chosen { get; set; }
+        public int ChosenId { get; set; }
     }
 }
