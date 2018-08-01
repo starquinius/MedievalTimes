@@ -51,11 +51,11 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                         Attitude = characterVM.Attitude,
                         IsFinished = false
                     };
-                    //To recognize the build of correct character
-                     characterVM.BuildId = character.Id;
                     //Save temp character to Db
                     _context.Add(character);
                     _context.SaveChanges();
+                    //To recognize the build of correct character
+                    characterVM.BuildId = character.Id;
                     //Goto Attributes
                     return View("~/Areas/CharCreation/Views/CreateChar/CreateAttributes.cshtml", characterVM);
                 case 2:
@@ -69,13 +69,28 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Filter choosable classes
                     characterVM = GetRaces(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectRace.cshtml", characterVM);
+
+
+
+
+
+//****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 3:
                     //Get correct build character
                     character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
-
-                    characterVM = GetClasses(characterVM);
+                    //Place chosen race                    
                     characterVM.Races = characterVM.ChoosableRaces.Where(race => race.Chosen = true).FirstOrDefault().Race;
+                    //Save temp character to Db
+                    _context.Update(character);
+                    _context.SaveChanges();
+                    //Filter choosable classes
+                    characterVM = GetClasses(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
+
+
+
+
+
                 case 4:
                     
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);

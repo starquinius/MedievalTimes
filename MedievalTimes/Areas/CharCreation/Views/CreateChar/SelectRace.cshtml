@@ -11,16 +11,24 @@
     @Html.HiddenFor(model => model.BuildId)
 
     <div class="container-fluid">
-        <div class="col-lg-4">
+        
+        <div class="row">
             @foreach (var item in Model.ChoosableRaces)
             {
-                <input asp-for="@item.Chosen" type="radio" value="@item.Chosen" /> @item.Race.Name
+                <div class="col-lg-3">
+                    <input asp-for="@item.Chosen" type="radio" value="@item.Chosen" /> @item.Race.Name
+                </div>
             }
         </div>
+
+        <div class="row">
+            <div class="text-center">
+                <button type="submit" class="btn btn-default"><b>Next Page</b></button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="text-center">
-        <button type="submit" class="btn btn-default"><b>Next Page</b></button>
-    </div>
+
 
 </form>
