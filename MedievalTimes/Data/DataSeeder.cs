@@ -115,7 +115,44 @@ namespace MedievalTimes.Data
                 }
             }
 
-
+            //Seed Attribute - Strength
+            if (_context.Strength.Count() == 0)
+            {
+                AttrStrength[] strengthTable = new AttrStrength[]
+                {
+                    new AttrStrength{ Id=new Guid(), Str=1, HitProb=-5, DmgAdj=-4, WeightAllow=1, MaxPress=3, OpenDoors=1, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=2, HitProb=-3, DmgAdj=-2, WeightAllow=1, MaxPress=5, OpenDoors=1, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=3, HitProb=-3, DmgAdj=-1, WeightAllow=5, MaxPress=10, OpenDoors=2, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=4, HitProb=-2, DmgAdj=-1, WeightAllow=10, MaxPress=25, OpenDoors=3, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=5, HitProb=-2, DmgAdj=-1, WeightAllow=10, MaxPress=25, OpenDoors=3, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=6, HitProb=-1, DmgAdj=0, WeightAllow=20, MaxPress=55, OpenDoors=4, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=7, HitProb=-1, DmgAdj=0, WeightAllow=20, MaxPress=55, OpenDoors=4, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=8, HitProb=0, DmgAdj=0, WeightAllow=35, MaxPress=90, OpenDoors=5, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=9, HitProb=0, DmgAdj=0, WeightAllow=35, MaxPress=90, OpenDoors=5, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=10, HitProb=0, DmgAdj=0, WeightAllow=40, MaxPress=115, OpenDoors=6, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=11, HitProb=0, DmgAdj=0, WeightAllow=40, MaxPress=115, OpenDoors=6, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=12, HitProb=0, DmgAdj=0, WeightAllow=45, MaxPress=140, OpenDoors=7, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=13, HitProb=0, DmgAdj=0, WeightAllow=45, MaxPress=140, OpenDoors=7, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=14, HitProb=0, DmgAdj=0, WeightAllow=55, MaxPress=170, OpenDoors=8, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=15, HitProb=0, DmgAdj=0, WeightAllow=55, MaxPress=170, OpenDoors=8, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=16, HitProb=0, DmgAdj=1, WeightAllow=70, MaxPress=195, OpenDoors=9, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=17, HitProb=1, DmgAdj=1, WeightAllow=85, MaxPress=220, OpenDoors=10, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=18, HitProb=1, DmgAdj=2, WeightAllow=110, MaxPress=255, OpenDoors=11, OpenClosedDoors=0, BendBarsLiftGates=0, Notes=""},
+                    new AttrStrength{ Id=new Guid(), Str=18, HitProb=1, DmgAdj=3, WeightAllow=135, MaxPress=280, OpenDoors=12, OpenClosedDoors=0, BendBarsLiftGates=0, Notes="", StrMinP=1, StrMaxP=50},
+                    new AttrStrength{ Id=new Guid(), Str=18, HitProb=2, DmgAdj=3, WeightAllow=160, MaxPress=305, OpenDoors=13, OpenClosedDoors=0, BendBarsLiftGates=0, Notes="", StrMinP=51, StrMaxP=75},
+                    new AttrStrength{ Id=new Guid(), Str=18, HitProb=2, DmgAdj=4, WeightAllow=185, MaxPress=330, OpenDoors=14, OpenClosedDoors=0, BendBarsLiftGates=0, Notes="", StrMinP=76, StrMaxP=90},
+                    new AttrStrength{ Id=new Guid(), Str=18, HitProb=2, DmgAdj=5, WeightAllow=235, MaxPress=380, OpenDoors=15, OpenClosedDoors=3, BendBarsLiftGates=0, Notes="", StrMinP=91, StrMaxP=99},
+                    new AttrStrength{ Id=new Guid(), Str=18, HitProb=3, DmgAdj=6, WeightAllow=335, MaxPress=480, OpenDoors=16, OpenClosedDoors=6, BendBarsLiftGates=0, Notes="", StrMinP=100, StrMaxP=100},
+                    new AttrStrength{ Id=new Guid(), Str=19, HitProb=3, DmgAdj=7, WeightAllow=485, MaxPress=640, OpenDoors=16, OpenClosedDoors=8, BendBarsLiftGates=0, Notes="Strong as a hill giant."},
+                    new AttrStrength{ Id=new Guid(), Str=20, HitProb=3, DmgAdj=8, WeightAllow=535, MaxPress=700, OpenDoors=17, OpenClosedDoors=10, BendBarsLiftGates=0, Notes="Strong as a stone giant."},
+                    new AttrStrength{ Id=new Guid(), Str=21, HitProb=4, DmgAdj=9, WeightAllow=635, MaxPress=810, OpenDoors=17, OpenClosedDoors=12, BendBarsLiftGates=0, Notes="Strong as a frost giant."},
+                    new AttrStrength{ Id=new Guid(), Str=22, HitProb=4, DmgAdj=10, WeightAllow=785, MaxPress=970, OpenDoors=18, OpenClosedDoors=14, BendBarsLiftGates=0, Notes="Strong as a fire giant."},
+                    new AttrStrength{ Id=new Guid(), Str=23, HitProb=5, DmgAdj=11, WeightAllow=935, MaxPress=1130, OpenDoors=18, OpenClosedDoors=16, BendBarsLiftGates=0, Notes="Strong as a cloud giant."},
+                    new AttrStrength{ Id=new Guid(), Str=24, HitProb=6, DmgAdj=12, WeightAllow=1235, MaxPress=1440, OpenDoors=19, OpenClosedDoors=17, BendBarsLiftGates=0, Notes="Strong as a storm giant."},
+                    new AttrStrength{ Id=new Guid(), Str=25, HitProb=7, DmgAdj=14, WeightAllow=1535, MaxPress=1750, OpenDoors=19, OpenClosedDoors=18, BendBarsLiftGates=0, Notes="Strong as a titan."}
+                };
+                await _context.AddRangeAsync(strengthTable);
+            }
 
 
 
