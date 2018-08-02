@@ -170,6 +170,9 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
         /// <returns></returns>
         private CharacterVM GetClasses(CharacterVM characterVM)
         {
+            //Get correct build character
+            var character = _context.Characters.Single(record => record.Id == characterVM.BuildId);
+
             List<ClassAbilityRequirements> choosableClasses;
 
             switch (characterVM.Races.Name)
@@ -203,7 +206,8 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                 {
                     Beroepen = race.Beroep
                 };
-                classVMList.Add(classVM);
+                if((race.MinStr <= character.Attributes.Strength)&&(race.MinDex <= character.Attributes.Dexterity) && (race.MinCon <= character.Attributes.Constitution) && (race.MinInt <= character.Attributes.Intelligence) && (race.MinWis <= character.Attributes.Wisdom) && (race.MinCha <= character.Attributes.Charisma))
+                    classVMList.Add(classVM);
             }
 
             characterVM.ChoosableClasses = classVMList;
