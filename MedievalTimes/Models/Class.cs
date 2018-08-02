@@ -18,6 +18,12 @@ namespace MedievalTimes.Models
         public int HitDiceMaxLvl { get; set; }
         public int HitDiceMaxLvlModifier { get; set; }
 
+        public int WPinit { get; set; }
+        public int WPperLvl { get; set; }
+        public int NotProficientPenalty { get; set; }
+        public int NWPinit { get; set; }
+        public int NWPperLvl { get; set; }
+
 
 
     }

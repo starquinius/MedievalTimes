@@ -106,9 +106,9 @@ namespace MedievalTimes.Data
                 {
                     Class[] beroepenTable = new Class[]
                     {
-                        new Class{ ClassId=new Guid(), Name = Beroep.fighter, HitDiceMaxLvl=9, HitDiceMaxLvlModifier=3, HitDiceNr=1, HitDiceSide=10, XpLeveling= xpLevels[0]},
-                        new Class{ ClassId=new Guid(), Name = Beroep.mage, HitDiceMaxLvl=10, HitDiceMaxLvlModifier=1, HitDiceNr=1, HitDiceSide=4, XpLeveling= xpLevels[1]},
-                        new Class{ ClassId=new Guid(), Name = Beroep.cleric, HitDiceMaxLvl=9, HitDiceMaxLvlModifier=2, HitDiceNr=1, HitDiceSide=8, XpLeveling= xpLevels[2]}
+                        new Class{ ClassId=new Guid(), Name = Beroep.fighter, HitDiceMaxLvl=9, HitDiceMaxLvlModifier=3, HitDiceNr=1, HitDiceSide=10, XpLeveling= xpLevels[0], WPinit=4, WPperLvl=3, NotProficientPenalty=-2, NWPinit=3, NWPperLvl=3 },
+                        new Class{ ClassId=new Guid(), Name = Beroep.mage, HitDiceMaxLvl=10, HitDiceMaxLvlModifier=1, HitDiceNr=1, HitDiceSide=4, XpLeveling= xpLevels[1], WPinit=1, WPperLvl=6, NotProficientPenalty=-5, NWPinit=4, NWPperLvl=3 },
+                        new Class{ ClassId=new Guid(), Name = Beroep.cleric, HitDiceMaxLvl=9, HitDiceMaxLvlModifier=2, HitDiceNr=1, HitDiceSide=8, XpLeveling= xpLevels[2], WPinit=2, WPperLvl=4, NotProficientPenalty=-3, NWPinit=4, NWPperLvl=3 }
 
                     };
                     await _context.AddRangeAsync(beroepenTable);

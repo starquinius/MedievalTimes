@@ -94,18 +94,15 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
-
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
+                    
+                case 5:
 
                     //Save username and character
                     character.CharOwner = User.Identity.Name;
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
-
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
-                    
-                case 5:
-
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
                     //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
