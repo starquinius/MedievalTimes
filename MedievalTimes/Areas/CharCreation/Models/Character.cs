@@ -37,5 +37,7 @@ namespace MedievalTimes.Areas.CharCreation.Models
 
         [Display(Name = "Character's Class")]
         public Beroep Beroepen { get; set; }
+
+        public List<WeaponProficiency> WeaponProfs { get; set; }
     }
 }

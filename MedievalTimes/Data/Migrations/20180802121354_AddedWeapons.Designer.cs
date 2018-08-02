@@ -4,14 +4,16 @@ using MedievalTimes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MedievalTimes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180802121354_AddedWeapons")]
+    partial class AddedWeapons
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -366,70 +368,6 @@ namespace MedievalTimes.Data.Migrations
                     b.ToTable("RacialAttrReq");
                 });
 
-            modelBuilder.Entity("MedievalTimes.Models.Weapon", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Cost");
-
-                    b.Property<int>("DamageLAdj");
-
-                    b.Property<int>("DamageLDiceSide");
-
-                    b.Property<int>("DamageLnrDice");
-
-                    b.Property<int>("DamageSAdj");
-
-                    b.Property<int>("DamageSMDiceSide");
-
-                    b.Property<int>("DamageSMnrDice");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("ROFnr");
-
-                    b.Property<int>("ROFrnd");
-
-                    b.Property<int>("RangeL");
-
-                    b.Property<int>("RangeM");
-
-                    b.Property<int>("RangeS");
-
-                    b.Property<int>("Size");
-
-                    b.Property<int>("SpeedFactor");
-
-                    b.Property<int>("Type");
-
-                    b.Property<int>("Weight");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Weapons");
-                });
-
-            modelBuilder.Entity("MedievalTimes.Models.WeaponProficiency", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("CharacterId");
-
-                    b.Property<int>("ProficiencySlots");
-
-                    b.Property<Guid?>("WeaponId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacterId");
-
-                    b.HasIndex("WeaponId");
-
-                    b.ToTable("WeaponProficiency");
-                });
-
             modelBuilder.Entity("MedievalTimes.Models.XpLeveling", b =>
                 {
                     b.Property<Guid>("Id")
@@ -638,17 +576,6 @@ namespace MedievalTimes.Data.Migrations
                     b.HasOne("MedievalTimes.Models.Race", "Race")
                         .WithMany()
                         .HasForeignKey("RaceId");
-                });
-
-            modelBuilder.Entity("MedievalTimes.Models.WeaponProficiency", b =>
-                {
-                    b.HasOne("MedievalTimes.Areas.CharCreation.Models.Character")
-                        .WithMany("WeaponProfs")
-                        .HasForeignKey("CharacterId");
-
-                    b.HasOne("MedievalTimes.Models.Weapon", "Weapon")
-                        .WithMany()
-                        .HasForeignKey("WeaponId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -188,7 +188,17 @@ namespace MedievalTimes.Data
                 await _context.AddRangeAsync(dexterityTable);
             }
 
-
+            if (_context.Weapons.Count() == 0)
+            {
+                Weapon[] wapensLijst = new Weapon[]
+                {
+                    //new Weapon{ Id=new Guid(), Name="", Cost=, Weight=, Size=WSize, Type=WType, SpeedFactor=, DamageSMnrDice=, DamageSMDiceSide=, DamageSAdj=, DamageLnrDice=, DamageLDiceSide=, DamageLAdj=, ROFnr=, ROFrnd=, RangeS=, RangeM=, RangeL=},
+                    new Weapon{ Id=new Guid(), Name="Arquebus", Cost=500, Weight=10, Size=WSize.Medium, Type=WType.Piercing, SpeedFactor=15, DamageSMnrDice=1, DamageSMDiceSide=10, DamageSAdj=0, DamageLnrDice=1, DamageLDiceSide=10, DamageLAdj=0, ROFnr=1, ROFrnd=3, RangeS=50, RangeM=150, RangeL=210},
+                    new Weapon{ Id=new Guid(), Name="Battle Axe", Cost=5, Weight=7, Size=WSize.Medium, Type=WType.Slashing, SpeedFactor=7, DamageSMnrDice=1, DamageSMDiceSide=8, DamageSAdj=0, DamageLnrDice=1, DamageLDiceSide=8, DamageLAdj=0, ROFnr=0, ROFrnd=0, RangeS=0, RangeM=0, RangeL=0},
+                    new Weapon{ Id=new Guid(), Name="Bow, Short", Cost=30, Weight=2, Size=WSize.Medium, Type=WType.Piercing, SpeedFactor=7, DamageSMnrDice=1, DamageSMDiceSide=6, DamageSAdj=0, DamageLnrDice=1, DamageLDiceSide=6, DamageLAdj=0, ROFnr=2, ROFrnd=1, RangeS=50, RangeM=100, RangeL=150}
+                };
+                await _context.AddRangeAsync(wapensLijst);
+            }
 
             await _context.SaveChangesAsync();
         }

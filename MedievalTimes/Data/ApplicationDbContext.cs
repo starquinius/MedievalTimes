@@ -26,6 +26,7 @@ namespace MedievalTimes.Data
         public DbSet<Race> Races { get; set; }
         public DbSet<Class> Classes { get; set; }
 
+        public DbSet<Weapon> Weapons { get; set; }
 
         public DbSet<Character> Characters { get; set; }
 
