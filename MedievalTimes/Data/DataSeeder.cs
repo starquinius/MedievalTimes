@@ -154,6 +154,39 @@ namespace MedievalTimes.Data
                 await _context.AddRangeAsync(strengthTable);
             }
 
+            //Seed Attribute - Dexterity
+            if (_context.Dexterity.Count() == 0)
+            {
+                AttrDexterity[] dexterityTable = new AttrDexterity[]
+                {
+                    new AttrDexterity{Id=new Guid(), Dex=1, ReactionAdj=-6, MissileAttackAdj=-6, DefensiveAdj=5},
+                    new AttrDexterity{Id=new Guid(), Dex=2, ReactionAdj=-4, MissileAttackAdj=-4, DefensiveAdj=5},
+                    new AttrDexterity{Id=new Guid(), Dex=3, ReactionAdj=-3, MissileAttackAdj=-3, DefensiveAdj=4},
+                    new AttrDexterity{Id=new Guid(), Dex=4, ReactionAdj=-2, MissileAttackAdj=-2, DefensiveAdj=3},
+                    new AttrDexterity{Id=new Guid(), Dex=5, ReactionAdj=-1, MissileAttackAdj=-1, DefensiveAdj=2},
+                    new AttrDexterity{Id=new Guid(), Dex=6, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=1},
+                    new AttrDexterity{Id=new Guid(), Dex=7, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=8, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=9, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=10, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=11, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=12, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=13, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=14, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=0},
+                    new AttrDexterity{Id=new Guid(), Dex=15, ReactionAdj=0, MissileAttackAdj=0, DefensiveAdj=-1},
+                    new AttrDexterity{Id=new Guid(), Dex=16, ReactionAdj=1, MissileAttackAdj=1, DefensiveAdj=-2},
+                    new AttrDexterity{Id=new Guid(), Dex=17, ReactionAdj=2, MissileAttackAdj=2, DefensiveAdj=-3},
+                    new AttrDexterity{Id=new Guid(), Dex=18, ReactionAdj=2, MissileAttackAdj=2, DefensiveAdj=-4},
+                    new AttrDexterity{Id=new Guid(), Dex=19, ReactionAdj=3, MissileAttackAdj=3, DefensiveAdj=-4},
+                    new AttrDexterity{Id=new Guid(), Dex=20, ReactionAdj=3, MissileAttackAdj=3, DefensiveAdj=-4},
+                    new AttrDexterity{Id=new Guid(), Dex=21, ReactionAdj=4, MissileAttackAdj=4, DefensiveAdj=-5},
+                    new AttrDexterity{Id=new Guid(), Dex=22, ReactionAdj=4, MissileAttackAdj=4, DefensiveAdj=-5},
+                    new AttrDexterity{Id=new Guid(), Dex=23, ReactionAdj=4, MissileAttackAdj=4, DefensiveAdj=-5},
+                    new AttrDexterity{Id=new Guid(), Dex=24, ReactionAdj=5, MissileAttackAdj=5, DefensiveAdj=-6},
+                    new AttrDexterity{Id=new Guid(), Dex=25, ReactionAdj=5, MissileAttackAdj=5, DefensiveAdj=-6 }
+                };
+            }
+
 
 
             await _context.SaveChangesAsync();
