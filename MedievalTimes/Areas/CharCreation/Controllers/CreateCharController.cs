@@ -90,17 +90,18 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Get correct build character
                     character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
                     //Place chosen class
-                    
+                    character.Beroepen = characterVM.Beroepen;
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
 
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
+                    
+                case 5:
 
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
                     //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                case 5:
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
             }
 
             //Or when first page

@@ -16,7 +16,7 @@
             @foreach (var item in Model.ChoosableClasses)
             {
                 <div class="col-lg-3">
-                    <input asp-for="@item.Beroepen" type="radio" value="@item.Beroepen" /> @item.Beroepen
+                    <input asp-for="Beroepen" type="radio" value="@item.Beroepen" /> @item.Beroepen
                 </div>
             }
         </div>
