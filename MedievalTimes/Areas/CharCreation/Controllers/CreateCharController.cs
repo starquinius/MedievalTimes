@@ -94,18 +94,36 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
+
+
+                    //Build available weapons
+                    var weaponList = _context.Weapons;
+                    List<WeaponProficiency> weaponProfList = new List<WeaponProficiency>();
+                    foreach(var wapen in weaponList)
+                    {
+                        weaponProfList.Add(new WeaponProficiency { Id = new Guid(), Weapon = wapen });
+                    }
+                    characterVM.WeaponProfs = weaponProfList;
+
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
                     
                 case 5:
 
+              
+
+
+
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
+                //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                case 6:
                     //Save username and character
                     character.CharOwner = User.Identity.Name;
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
-                    //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+                    //Goto after saving, starting the game...
+                    RedirectToAction();
+                    break;
             }
 
             //Or when first page

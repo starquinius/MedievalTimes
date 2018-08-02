@@ -4,21 +4,18 @@
 
 @model CharacterVM
 
+<form asp-controller="CreateChar" asp-action="SubmitChar" asp-route-pageNr=5 method="post">
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @for(var teller=0; teller<@Model.WeaponProfs.Count();teller++ )
+    {
+    <div class="form-group text-center">
+        <label asp-for="@Model.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs[teller].Weapon.Name</label>
+        <input asp-for="@Model.WeaponProfs[teller].ProficiencySlots" class="form-control">
+    </div>
+    }
+    <button type="submit" class="btn btn-default"><b>Next Page</b></button>
+</form>
 
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +12,10 @@ namespace MedievalTimes.Models
     public class Weapon
     {
         public Guid Id { get; set; }
+
+        [Display(Name = "Weapon's Name")]
         public string Name { get; set; }
+
         public int Cost { get; set; }
         public int Weight { get; set; }
         public WSize Size { get; set; }

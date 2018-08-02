@@ -40,5 +40,8 @@ namespace MedievalTimes.Areas.CharCreation.ViewModels
 
         [Display(Name = "Character's Allowed Classes")]
         public IEnumerable<ClassVM> ChoosableClasses { get; set; }
+
+        [Display(Name = "Character's Weapon Proficiencies")]
+        public List<WeaponProficiency> WeaponProfs { get; set; }
     }
 }
