@@ -28,7 +28,7 @@ namespace MedievalTimes.Data
         public async Task Seed()
         {
             //Seed Roles
-            if (_context.Users.Count() == 0)
+            if (_context.Users.Count() != 0)
             {
                 RoleRepo RRepo = new RoleRepo(_userManager, _roleManager, _context);
                 await RRepo.AddRole("Player");
@@ -43,7 +43,7 @@ namespace MedievalTimes.Data
             }
 
             //Seed Races
-            if (_context.Races.Count() != 0)
+            if (_context.Races.Count() == 0)
             {
                 Race[] race = new Race[]{
                     new Race{Name="Human",BaseAge=15, AgeModifier = new Dice(){ NrDice=1, DiceSide=4, Modifier=0}, BaseMaxAge=90, MaxAgeModifier = new Dice(){NrDice=2, DiceSide=20, Modifier=0}, BaseHeightF=59, BaseHeightM=60, HeightModifier = new Dice{NrDice=2, DiceSide=10, Modifier=0 }, BaseWeightF=100, BaseWeightM=140, WeightModifier=new Dice{ NrDice=6, DiceSide=10, Modifier=0}, RaceId = new Guid() },

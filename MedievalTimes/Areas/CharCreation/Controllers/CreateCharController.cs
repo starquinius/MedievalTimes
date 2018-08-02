@@ -83,7 +83,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     _context.Update(character);
                     _context.SaveChanges();
                     //Filter choosable classes
-                    characterVM = GetClasses(character, characterVM);
+                    characterVM = GetClasses(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
                 //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 4:
@@ -158,9 +158,46 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
         /// </summary>
         /// <param name="characterVM"></param>
         /// <returns></returns>
-        private CharacterVM GetClasses(Character character, CharacterVM characterVM)
+        private CharacterVM GetClasses(CharacterVM characterVM)
         {
-            //var classList = _context.ClassAttrReq.Where(req => req.RacesAllowed.Contains<Race>(character.Races)).ToList();
+            List<ClassAbilityRequirements> choosableClasses;
+
+            switch (characterVM.Races.Name)
+            {
+                case "Human":
+                    choosableClasses = _context.ClassAttrReq.Where(record => record.RaceHuman == true).ToList();
+                    break;
+                case "Elf":
+                    choosableClasses = _context.ClassAttrReq.Where(record => record.RaceElf == true).ToList();
+                    break;
+                case "Dwarf":
+                    choosableClasses = _context.ClassAttrReq.Where(record => record.RaceDwarf == true).ToList();
+                    break;
+                case "Halfling":
+                    choosableClasses = _context.ClassAttrReq.Where(record => record.RaceHalfling == true).ToList();
+                    break;
+                case "Half-Elf":
+                    choosableClasses = _context.ClassAttrReq.Where(record => record.RaceHalfElf == true).ToList();
+                    break;
+                case "Gnome":
+                    choosableClasses = _context.ClassAttrReq.Where(record => record.RaceGnome == true).ToList();
+                    break;
+            }
+
+            ClassVM classVM = new ClassVM();
+            List<ClassVM> classVMList = new List<ClassVM>();
+
+            foreach (var race in classVMList)
+            {
+                classVM = new ClassVM
+                {
+                     Beroepen = race.Beroepen
+                };
+                classVMList.Add(classVM);
+            }
+
+            characterVM.ChoosableClasses = classVMList;
+
 
             return characterVM;
         }
