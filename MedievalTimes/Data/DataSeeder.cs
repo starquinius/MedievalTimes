@@ -185,6 +185,7 @@ namespace MedievalTimes.Data
                     new AttrDexterity{Id=new Guid(), Dex=24, ReactionAdj=5, MissileAttackAdj=5, DefensiveAdj=-6},
                     new AttrDexterity{Id=new Guid(), Dex=25, ReactionAdj=5, MissileAttackAdj=5, DefensiveAdj=-6 }
                 };
+                await _context.AddRangeAsync(dexterityTable);
             }
 
 

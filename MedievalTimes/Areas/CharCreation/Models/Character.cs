@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using static MedievalTimes.Areas.CharCreation.Models.Enums;
 
@@ -13,6 +15,7 @@ namespace MedievalTimes.Areas.CharCreation.Models
         [Key]
         public Guid Id { get; set; }
         public bool IsFinished { get; set; }
+        public string CharOwner { get; set; }
 
         [Display(Name = "Character's Name")]
         public string Name { get; set; }

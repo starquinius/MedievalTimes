@@ -90,7 +90,14 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Get correct build character
                     character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
                     //Place chosen class
-                    character.Beroepen = characterVM.Beroepen;
+                    character.Beroepen = characterVM.Beroepen;                    
+                    //Save temp character to Db
+                    _context.Update(character);
+                    _context.SaveChanges();
+
+
+                    //Save username and character
+                    character.CharOwner = User.Identity.Name;
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
