@@ -41,7 +41,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             Character character = new Character();
 
             switch (pageNr)
-            {                
+            {
                 case 1:
                     //Place Generic Info in temp character
                     character = new Character()
@@ -85,10 +85,20 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Filter choosable classes
                     characterVM = GetClasses(characterVM);
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectClass.cshtml", characterVM);
-                //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                 case 4:
+                    //Get correct build character
+                    character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
+                    //Place chosen class
                     
+                    //Save temp character to Db
+                    _context.Update(character);
+                    _context.SaveChanges();
+
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
+
+                    //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                 case 5:
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
             }
@@ -96,7 +106,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             //Or when first page
             return View("~/Areas/CharCreation/Views/CreateChar/StartCreation.cshtml", characterVM);
         }
-        
+
         //****************************************************************** Generic Methods
         /// <summary>
         /// Filter the races with the attributes requirements
@@ -118,11 +128,11 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             RaceVM raceVM = new RaceVM();
             List<RaceVM> raceVMList = new List<RaceVM>();
 
-            foreach(var race in raceList)
+            foreach (var race in raceList)
             {
                 raceVM = new RaceVM
                 {
-                    Race = race                 
+                    Race = race
                 };
                 raceVMList.Add(raceVM);
             }
@@ -137,7 +147,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
         /// </summary>
         /// <param name="character"></param>
         /// <returns></returns>
-        private Character UpdateAttributes (Character character)
+        private Character UpdateAttributes(Character character)
         {
             //Get correct record (race line) from adjustment table
             RacialAttributeAdjustment attrAdj = new RacialAttributeAdjustment();
@@ -179,7 +189,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                 case "Half-Elf":
                     choosableClasses = _context.ClassAttrReq.Where(record => record.RaceHalfElf == true).ToList();
                     break;
-                case "Gnome":
+                default: //Only Gnome is left
                     choosableClasses = _context.ClassAttrReq.Where(record => record.RaceGnome == true).ToList();
                     break;
             }
@@ -187,11 +197,11 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             ClassVM classVM = new ClassVM();
             List<ClassVM> classVMList = new List<ClassVM>();
 
-            foreach (var race in classVMList)
+            foreach (var race in choosableClasses)
             {
                 classVM = new ClassVM
                 {
-                     Beroepen = race.Beroepen
+                    Beroepen = race.Beroep
                 };
                 classVMList.Add(classVM);
             }
