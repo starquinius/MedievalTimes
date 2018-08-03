@@ -101,11 +101,14 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     var weaponList = _context.Weapons;
                     var raceAttribs = _context.Classes.Single(record => record.Name == character.Beroepen);
                     var totalWPs = raceAttribs.WPinit;
+                    List<WeaponProficiency> wapenProficiencies= new List<WeaponProficiency>();
+
                     WeaponProfVM weaponProfList = new WeaponProfVM()
                     {
                         TotalWPs = totalWPs,
-                        FreeWPs = totalWPs
-                    };
+                        FreeWPs = totalWPs,
+                        Id = new Guid()
+            };
 
                     foreach (var wapen in weaponList)
                     {
@@ -115,11 +118,11 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                             Weapon = wapen,
                             ProficiencySlots = 0
                         };
-
-                        weaponProfList.WeaponProfs.Add(WP);                         
+                        wapenProficiencies.Add(WP);
+                                                
                     }
+                    weaponProfList.WeaponProfs = wapenProficiencies;
 
-                    weaponProfList.Id = new Guid();
 
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", weaponProfList);
                     
