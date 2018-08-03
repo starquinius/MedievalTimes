@@ -62,3 +62,24 @@ function ReRoll() {
         $("#rollAttributes").text("ReRoll Dices (" + reroll + ")");
     }
 }
+
+
+function ChooseWPs(initFreeWPs, id) {
+
+    freeWPs = $('#FreeWeaponProficiencies').value;
+
+    if (isNaN('freeWPs')) {
+        freeWPs = document.getElementById('FreeWeaponProficiencies').value;
+    }
+
+    if (freeWPs <= 0) {
+        alert("You don't have any free weapon proficiency slots to spend!");
+        document.getElementById(id).value--;
+    }
+    else {
+        freeWPs = freeWPs-1;
+    }
+
+    document.getElementById('FreeWeaponProficiencies').value = freeWPs;
+
+}
