@@ -90,22 +90,38 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     //Get correct build character
                     character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
                     //Place chosen class
-                    character.Beroepen = characterVM.Beroepen;                    
+                    character.Beroepen = characterVM.Beroepen;
                     //Save temp character to Db
                     _context.Update(character);
                     _context.SaveChanges();
 
 
                     //Build available weapons
+                    WeaponProficiency WP;
                     var weaponList = _context.Weapons;
-                    List<WeaponProficiency> weaponProfList = new List<WeaponProficiency>();
-                    foreach(var wapen in weaponList)
+                    var raceAttribs = _context.Classes.Single(record => record.Name == character.Beroepen);
+                    var totalWPs = raceAttribs.WPinit;
+                    WeaponProfVM weaponProfList = new WeaponProfVM()
                     {
-                        weaponProfList.Add(new WeaponProficiency { Id = new Guid(), Weapon = wapen });
-                    }
-                    characterVM.WeaponProfs = weaponProfList;
+                        TotalWPs = totalWPs,
+                        FreeWPs = totalWPs
+                    };
 
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
+                    foreach (var wapen in weaponList)
+                    {
+                        WP = new WeaponProficiency
+                        {
+                            Id = new Guid(),
+                            Weapon = wapen,
+                            ProficiencySlots = 0
+                        };
+
+                        weaponProfList.WeaponProfs.Add(WP);                         
+                    }
+
+                    weaponProfList.Id = new Guid();
+
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", weaponProfList);
                     
                 case 5:
 

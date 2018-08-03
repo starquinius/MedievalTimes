@@ -2,7 +2,9 @@
     Layout = "_Layout";
 }
 
-@model CharacterVM
+@model WeaponProfVM
+
+<p>Divide @Model.FreeWPs (of @Model.TotalWPs)</p>
 
 <form asp-controller="CreateChar" asp-action="SubmitChar" asp-route-pageNr=5 method="post">
     
