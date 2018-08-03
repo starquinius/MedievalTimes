@@ -64,22 +64,39 @@ function ReRoll() {
 }
 
 
-function ChooseWPs(initFreeWPs, id) {
+function ChooseWPs(initTotalWPs, id) {
 
-    freeWPs = $('#FreeWeaponProficiencies').value;
+    //init
+    //freeWPs = $('#FreeWeaponProficiencies').value;
 
-    if (isNaN('freeWPs')) {
-        freeWPs = document.getElementById('FreeWeaponProficiencies').value;
-    }
+    //Count checked boxes
+    checkedWPs = document.querySelectorAll('input[type="checkbox"]:checked').length
 
-    if (freeWPs <= 0) {
+    if (checkedWPs > initTotalWPs) {
         alert("You don't have any free weapon proficiency slots to spend!");
-        document.getElementById(id).value--;
+        document.getElementById(id).checked = false;
     }
     else {
-        freeWPs = freeWPs-1;
+        restWPs = initTotalWPs - checkedWPs;
+        document.getElementsByClassName('freeSlots')[0].innerText = restWPs;
     }
 
-    document.getElementById('FreeWeaponProficiencies').value = freeWPs;
+
+
+    //if (isNaN('freeWPs')) {
+    //    freeWPs = document.getElementById('FreeWeaponProficiencies').value;
+    //}
+
+    //if (freeWPs <= 0) {
+    //    alert("You don't have any free weapon proficiency slots to spend!");
+    //    document.getElementById(id).value--;    //    
+    //}
+    //else {
+    //    freeWPs = freeWPs-1;
+    //}
+
+ 
+
+    //document.getElementById('FreeWeaponProficiencies').value = freeWPs;
 
 }
