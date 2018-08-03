@@ -116,7 +116,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                         {
                             Id = new Guid(),
                             Weapon = wapen,
-                            ProficiencySlots = 0
+                            ProficiencySlots = false
                         };
                         wapenProficiencies.Add(WP);
                                                 
@@ -127,13 +127,8 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", weaponProfList);
                     
                 case 5:
+                    break;
 
-              
-
-
-
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectNonWeaponSkills.cshtml", characterVM);
-                //****************************************************************************************************************************** WIP WIP WIP WIP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 6:
                     //Save username and character
                     character.CharOwner = User.Identity.Name;
@@ -147,6 +142,13 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
 
             //Or when first page
             return View("~/Areas/CharCreation/Views/CreateChar/StartCreation.cshtml", characterVM);
+        }
+
+
+        public IActionResult SetWPs (WeaponProfVM weaponProfList)
+        {
+
+            return View();
         }
 
         //****************************************************************** Generic Methods
