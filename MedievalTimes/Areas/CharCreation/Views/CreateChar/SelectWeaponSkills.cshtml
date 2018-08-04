@@ -12,17 +12,18 @@
     @Html.Hidden("FreeWeaponProficiencies", @Model.WeaponProfs.FreeWPs)
     @Html.HiddenFor(Model => @Model.WeaponProfs.Id);
     @Html.HiddenFor(Model => @Model.WeaponProfs.TotalWPs);
+    @Html.HiddenFor(Model => @Model.BuildId);
 
     @for (var teller = 0; teller < @Model.WeaponProfs.WeaponProfs.Count(); teller++)
     {
-    <div class="form-group text-center">
+        <div class="form-group text-center">
 
-        @Html.HiddenFor(Model => @Model.WeaponProfs.WeaponProfs[teller].Weapon.Name);
+            @Html.HiddenFor(Model => @Model.WeaponProfs.WeaponProfs[teller].Weapon.Name);
 
-        <label asp-for="@Model.WeaponProfs.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs.WeaponProfs[teller].Weapon.Name</label>
-        <input asp-for="@Model.WeaponProfs.WeaponProfs[teller].ProficiencySlots" type="checkbox"  value="true" id="@Model.WeaponProfs.WeaponProfs[teller].Weapon.Id" class="form-control" onchange="ChooseWPs(@Model.WeaponProfs.TotalWPs, id);" />
+            <label asp-for="@Model.WeaponProfs.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs.WeaponProfs[teller].Weapon.Name</label>
+            <input asp-for="@Model.WeaponProfs.WeaponProfs[teller].ProficiencySlots" type="checkbox" value="true" id="@Model.WeaponProfs.WeaponProfs[teller].Weapon.Id" class="form-control" onchange="ChooseWPs(@Model.WeaponProfs.TotalWPs, id);" />
 
-    </div>
+        </div>
     }
     <button type="submit" class="btn btn-default"><b>Next Page</b></button>
 </form>
