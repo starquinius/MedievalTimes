@@ -15,13 +15,14 @@
 
     @for (var teller = 0; teller < @Model.WeaponProfs.Count(); teller++)
     {
-        <div class="form-group text-center">
+    <div class="form-group text-center">
 
-            @Html.HiddenFor(Model => @Model.WeaponProfs[teller].Weapon.Name);
+        @Html.HiddenFor(Model => @Model.WeaponProfs[teller].Weapon.Name);
 
-            <label asp-for="@Model.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs[teller].Weapon.Name</label>
-            <input type="checkbox" name="@Model.WeaponProfs[teller].ProficiencySlots" value="@Model.WeaponProfs[teller].ProficiencySlots" id="@Model.WeaponProfs[teller].Weapon.Id" class="form-control" onchange="ChooseWPs(@Model.TotalWPs, id);"/>
-        </div>
+        <label asp-for="@Model.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs[teller].Weapon.Name</label>
+        <input asp-for="@Model.WeaponProfs[teller].ProficiencySlots" type="checkbox"  value="true" id="@Model.WeaponProfs[teller].Weapon.Id" class="form-control" onchange="ChooseWPs(@Model.TotalWPs, id);" />
+
+    </div>
     }
     <button type="submit" class="btn btn-default"><b>Next Page</b></button>
 </form>
