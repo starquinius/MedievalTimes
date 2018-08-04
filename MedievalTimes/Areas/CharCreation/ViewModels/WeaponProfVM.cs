@@ -17,5 +17,7 @@ namespace MedievalTimes.Areas.CharCreation.ViewModels
 
         public int TotalWPs { get; set; }
         public int FreeWPs { get; set; }
+
+
     }
 }

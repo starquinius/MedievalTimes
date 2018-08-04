@@ -11,6 +11,5 @@ namespace MedievalTimes.Models
         public Weapon Weapon { get; set; }
         public bool ProficiencySlots { get; set; }
         public int NrSlots { get; set; }
-
     }
 }

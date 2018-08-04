@@ -2,25 +2,25 @@
     Layout = "_Layout";
 }
 
-@model WeaponProfVM
+@model CharacterVM
 
-<p> >Divide <b class="freeSlots">@Model.FreeWPs</b> (of @Model.TotalWPs)</p>
+<p> >Divide <b class="freeSlots">@Model.WeaponProfs.FreeWPs</b> (of @Model.WeaponProfs.TotalWPs)</p>
 
 
 <form asp-controller="CreateChar" asp-action="SetWPs" method="post">
 
-    @Html.Hidden("FreeWeaponProficiencies", @Model.FreeWPs)
-    @Html.HiddenFor(Model => @Model.Id);
-    @Html.HiddenFor(Model => @Model.TotalWPs);
+    @Html.Hidden("FreeWeaponProficiencies", @Model.WeaponProfs.FreeWPs)
+    @Html.HiddenFor(Model => @Model.WeaponProfs.Id);
+    @Html.HiddenFor(Model => @Model.WeaponProfs.TotalWPs);
 
-    @for (var teller = 0; teller < @Model.WeaponProfs.Count(); teller++)
+    @for (var teller = 0; teller < @Model.WeaponProfs.WeaponProfs.Count(); teller++)
     {
     <div class="form-group text-center">
 
-        @Html.HiddenFor(Model => @Model.WeaponProfs[teller].Weapon.Name);
+        @Html.HiddenFor(Model => @Model.WeaponProfs.WeaponProfs[teller].Weapon.Name);
 
-        <label asp-for="@Model.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs[teller].Weapon.Name</label>
-        <input asp-for="@Model.WeaponProfs[teller].ProficiencySlots" type="checkbox"  value="true" id="@Model.WeaponProfs[teller].Weapon.Id" class="form-control" onchange="ChooseWPs(@Model.TotalWPs, id);" />
+        <label asp-for="@Model.WeaponProfs.WeaponProfs[teller].Weapon.Name"> @Model.WeaponProfs.WeaponProfs[teller].Weapon.Name</label>
+        <input asp-for="@Model.WeaponProfs.WeaponProfs[teller].ProficiencySlots" type="checkbox"  value="true" id="@Model.WeaponProfs.WeaponProfs[teller].Weapon.Id" class="form-control" onchange="ChooseWPs(@Model.WeaponProfs.TotalWPs, id);" />
 
     </div>
     }

@@ -121,10 +121,10 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                         wapenProficiencies.Add(WP);
                                                 
                     }
-                    weaponProfList.WeaponProfs = wapenProficiencies;
+                    characterVM.WeaponProfs.WeaponProfs = wapenProficiencies;
 
 
-                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", weaponProfList);
+                    return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
                     
                 case 5:
                     break;
@@ -145,8 +145,25 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
         }
 
 
-        public IActionResult SetWPs (WeaponProfVM weaponProfList)
+        public IActionResult SetWPs (CharacterVM characterVM)
         {
+            //Init
+            var allWeapons = _context.Weapons.ToList();
+            string wapenNaam;
+            //Get correct build character
+            var character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
+            //Set WPs at correct weapons
+            foreach(var WP in characterVM.WeaponProfs.WeaponProfs)
+            {
+                if (WP.ProficiencySlots)
+                {
+                    wapenNaam = WP.Weapon.Name;
+                    character.WeaponProfs.Add(new WeaponProficiency { Weapon = _context.Weapons.Single(record => record.Name == wapenNaam), Id = new Guid(), NrSlots = 1, ProficiencySlots = true });
+                }
+            }                    
+            //Save temp character to Db
+            _context.Update(character);
+            _context.SaveChanges();
 
             return View();
         }
