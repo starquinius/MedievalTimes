@@ -96,36 +96,35 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                     _context.SaveChanges();
 
 
+
                     //Build available weapons
                     WeaponProficiency WP;
                     var weaponList = _context.Weapons;
                     var raceAttribs = _context.Classes.Single(record => record.Name == character.Beroepen);
                     var totalWPs = raceAttribs.WPinit;
-                    List<WeaponProficiency> wapenProficiencies= new List<WeaponProficiency>();
-
-                    WeaponProfVM weaponProfList = new WeaponProfVM()
-                    {
-                        TotalWPs = totalWPs,
-                        FreeWPs = totalWPs,
-                        Id = new Guid()
-            };
+                    List<WeaponProficiency> wapenProficiencies = new List<WeaponProficiency>();
 
                     foreach (var wapen in weaponList)
                     {
                         WP = new WeaponProficiency
                         {
-                            Id = new Guid(),
+                            Id = Guid.NewGuid(),
                             Weapon = wapen,
                             ProficiencySlots = false
                         };
                         wapenProficiencies.Add(WP);
-                                                
                     }
-                    characterVM.WeaponProfs.WeaponProfs = wapenProficiencies;
 
+                    WeaponProfVM weaponProfList = new WeaponProfVM()
+                    {
+                        TotalWPs = totalWPs,
+                        FreeWPs = totalWPs,
+                        Id = Guid.NewGuid(),
+                        WeaponProfs = wapenProficiencies
+                    };
 
                     return View("~/Areas/CharCreation/Views/CreateChar/SelectWeaponSkills.cshtml", characterVM);
-                    
+
                 case 5:
                     break;
 
@@ -145,7 +144,8 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
         }
 
 
-        public IActionResult SetWPs (CharacterVM characterVM)
+
+        public IActionResult SetWPs(CharacterVM characterVM)
         {
             //Init
             var allWeapons = _context.Weapons.ToList();
@@ -153,14 +153,14 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
             //Get correct build character
             var character = _context.Characters.Include(rec => rec.Attributes).Single(record => record.Id == characterVM.BuildId);
             //Set WPs at correct weapons
-            foreach(var WP in characterVM.WeaponProfs.WeaponProfs)
+            foreach (var WP in characterVM.WeaponProfs.WeaponProfs)
             {
                 if (WP.ProficiencySlots)
                 {
                     wapenNaam = WP.Weapon.Name;
                     character.WeaponProfs.Add(new WeaponProficiency { Weapon = _context.Weapons.Single(record => record.Name == wapenNaam), Id = new Guid(), NrSlots = 1, ProficiencySlots = true });
                 }
-            }                    
+            }
             //Save temp character to Db
             _context.Update(character);
             _context.SaveChanges();
@@ -267,7 +267,7 @@ namespace MedievalTimes.Areas.CharCreation.Controllers
                 {
                     Beroepen = race.Beroep
                 };
-                if((race.MinStr <= character.Attributes.Strength)&&(race.MinDex <= character.Attributes.Dexterity) && (race.MinCon <= character.Attributes.Constitution) && (race.MinInt <= character.Attributes.Intelligence) && (race.MinWis <= character.Attributes.Wisdom) && (race.MinCha <= character.Attributes.Charisma))
+                if ((race.MinStr <= character.Attributes.Strength) && (race.MinDex <= character.Attributes.Dexterity) && (race.MinCon <= character.Attributes.Constitution) && (race.MinInt <= character.Attributes.Intelligence) && (race.MinWis <= character.Attributes.Wisdom) && (race.MinCha <= character.Attributes.Charisma))
                     classVMList.Add(classVM);
             }
 
